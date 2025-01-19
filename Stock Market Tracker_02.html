@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<!-- saved from url=(0032)http://127.0.0.1:5500/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stock Market Tracker</title>
+  <link rel="stylesheet" href="./Stock Market Tracker_02_files/styles.css">
+</head>
+<body class="dark-mode">
+  <div class="container dark-mode">
+    <header>
+      <h1>Stock Market Tracker</h1>
+      <input type="text" id="stock-symbol" placeholder="Enter Stock Symbol (e.g., AAPL)">
+      <button id="fetch-stock">Get Stock Data</button>
+      <button id="dark-mode-toggle" class="dark-toggle">Toggle Dark Mode</button>
+    </header>
+    <main>
+      <div id="stock-info">
+        <h2 id="company-name">Stock: AADI</h2>
+        <p id="current-price">Current Price: $2.9900</p>
+        <p id="volatility">Volatility: 0.49</p>
+        <canvas id="stock-chart" width="1500" height="750" style="display: block; box-sizing: border-box; height: 400px; width: 800px;"></canvas>
+      </div>
+      <section id="fees-section">
+        <h2>Fees &amp; Charges</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Platform</th>
+              <th>Fee</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Platform A</td>
+              <td>$5/trade</td>
+            </tr>
+            <tr>
+              <td>Platform B</td>
+              <td>$0.01/share</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <section id="support-section">
+        <h2>Customer Support</h2>
+        <form id="support-form">
+          <input type="text" placeholder="Your Name" required="">
+          <input type="email" placeholder="Your Email" required="">
+          <textarea placeholder="Your Message" required=""></textarea>
+          <button type="submit">Submit</button>
+        </form>
+      </section>
+    </main>
+    <footer>
+      <p>
+        Disclaimer: This app provides stock data for informational purposes only. Please consult a financial advisor for investment decisions.
+      </p>
+    </footer>
+  </div>
+  <script src="./Stock Market Tracker_02_files/chart.js.download"></script>
+  <script src="./Stock Market Tracker_02_files/app.js.download"></script>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+
+
+</body></html>
