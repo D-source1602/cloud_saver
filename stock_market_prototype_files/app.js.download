@@ -1,0 +1,102 @@
+const apiKey = "YOUR_API_KEY"; // Replace with your API key
+const baseUrl = "https://www.alphavantage.co/query";
+
+const fetchStockButton = document.getElementById("fetch-stock");
+const stockSymbolInput = document.getElementById("stock-symbol");
+const companyNameElement = document.getElementById("company-name");
+const currentPriceElement = document.getElementById("current-price");
+
+let stockChart;
+
+// Toggle Dark Mode
+document.getElementById("dark-mode-toggle").addEventListener("click", () => {
+  document.body.classList.toggle("dark-mode");
+});
+
+// Fetch Stock Volatility
+async function fetchVolatility(stockSymbol) {
+  const url = `${baseUrl}?function=TIME_SERIES_DAILY&symbol=${stockSymbol}&apikey=${apiKey}`;
+  const response = await fetch(url);
+  const data = await response.json();
+
+  if (!data["Time Series (Daily)"]) {
+    throw new Error("Volatility data unavailable.");
+  }
+
+  const prices = Object.values(data["Time Series (Daily)"]).map(d => parseFloat(d["4. close"]));
+  const mean = prices.reduce((a, b) => a + b, 0) / prices.length;
+  const variance = prices.reduce((sum, price) => sum + Math.pow(price - mean, 2), 0) / prices.length;
+  const volatility = Math.sqrt(variance).toFixed(2);
+
+  return volatility;
+}
+
+// Fetch Stock Data
+fetchStockButton.addEventListener("click", async () => {
+  const stockSymbol = stockSymbolInput.value.toUpperCase();
+  if (!stockSymbol) return alert("Please enter a stock symbol!");
+
+  const url = `${baseUrl}?function=TIME_SERIES_INTRADAY&symbol=${stockSymbol}&interval=5min&apikey=${apiKey}`;
+
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (!data["Time Series (5min)"]) {
+      alert("Invalid stock symbol or data unavailable!");
+      return;
+    }
+
+    const timeSeries = data["Time Series (5min)"];
+    const latestTime = Object.keys(timeSeries)[0];
+    const latestData = timeSeries[latestTime];
+    const currentPrice = latestData["1. open"];
+
+    companyNameElement.textContent = `Stock: ${stockSymbol}`;
+    currentPriceElement.textContent = `Current Price: $${currentPrice}`;
+
+    const volatility = await fetchVolatility(stockSymbol);
+    document.getElementById("volatility").textContent = `Volatility: ${volatility}`;
+
+    const labels = Object.keys(timeSeries).slice(0, 10).reverse();
+    const prices = labels.map((time) => timeSeries[time]["1. open"]).reverse();
+
+    renderChart(labels, prices);
+  } catch (error) {
+    console.error("Error fetching stock data:", error);
+    alert("Failed to fetch stock data.");
+  }
+});
+
+// Render Chart
+function renderChart(labels, prices) {
+  const ctx = document.getElementById("stock-chart").getContext("2d");
+  if (stockChart) stockChart.destroy();
+
+  stockChart = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels,
+      datasets: [{
+        label: "Stock Price",
+        data: prices,
+        borderColor: "#007bff",
+        backgroundColor: "rgba(0, 123, 255, 0.1)",
+        borderWidth: 2,
+        fill: true,
+      }],
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+      },
+    },
+  });
+}
+
+// Customer Support Form Submission
+document.getElementById("support-form").addEventListener("submit", (event) => {
+  event.preventDefault();
+  alert("Thank you for contacting us! We will respond shortly.");
+});

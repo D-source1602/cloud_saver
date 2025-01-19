@@ -1,0 +1,118 @@
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f9;
+}
+
+.container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+header h1 {
+  margin-bottom: 10px;
+}
+
+header input, header button {
+  padding: 10px;
+  margin: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+header button {
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+}
+
+header button:hover {
+  background-color: #0056b3;
+}
+
+/* Dark Mode */
+body.dark-mode {
+  background-color: #121212;
+  color: #fff;
+}
+
+.dark-toggle {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.dark-toggle:hover {
+  background-color: #0056b3;
+}
+
+/* Fees Section */
+#fees-section {
+  margin-top: 20px;
+}
+
+#fees-section table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#fees-section th, #fees-section td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#fees-section th {
+  background-color: #007bff;
+  color: white;
+  text-align: left;
+}
+
+/* Support Section */
+#support-section {
+  margin-top: 20px;
+}
+
+#support-form {
+  display: flex;
+  flex-direction: column;
+}
+
+#support-form input, #support-form textarea, #support-form button {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+#support-form button {
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+#support-form button:hover {
+  background-color: #0056b3;
+}
+
+/* Chart */
+canvas {
+  margin-top: 20px;
+  max-width: 100%;
+}
